@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import './App.css';
 
 import CityWeatherList from '../CityWeather/CityWeatherList'
+import CityWeatherDetail from "../CityWeather/CityWeatherDetail";
 
 class App extends Component {
     render() {
@@ -10,9 +11,12 @@ class App extends Component {
 
         return (
             <div className="App">
-                <CityWeatherList
-                    cities={cities}
+                <CityWeatherList cities={cities}
                     selectCity={(cityName) => store.dispatch({type: 'CITY_DETAIL', value: cityName})}/>
+
+                <CityWeatherDetail cityWeatherDetail={state.cityWeatherDetail}
+                    isLoading={state.isLoadingCityDetail}
+                />
             </div>
         );
     }

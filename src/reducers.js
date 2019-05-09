@@ -1,6 +1,6 @@
 const initialState = {
     cities: ['Dublin', 'Madrid', 'Amsterdam'],
-    cityDetail: null,
+    cityWeatherDetail: null,
     isLoadingCityDetail: true
 };
 
@@ -14,6 +14,7 @@ const reducer = (state = initialState, action) => {
         case 'CITY_DETAIL_SUCCESS':
             return {
                 ...state,
+                cityWeatherDetail: action.payload,
                 isLoadingCityDetail: false,
             };
         default:
