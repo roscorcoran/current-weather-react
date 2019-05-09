@@ -33,7 +33,7 @@ class CityWeatherItem extends Component {
     }
 
     render() {
-        const {city} = this.props;
+        const {city, onClick} = this.props;
         const {cityWeatherSummary, isLoading} = this.state;
 
         if (isLoading) {
@@ -42,7 +42,7 @@ class CityWeatherItem extends Component {
             );
         } else {
             return (
-                <li>
+                <li onClick={onClick}>
                     {city} - (
                     {cityWeatherSummary.city.country})
                 </li>

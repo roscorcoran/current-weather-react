@@ -5,12 +5,14 @@ import CityWeatherList from '../CityWeather/CityWeatherList'
 
 class App extends Component {
     render() {
-        const {state} = this.props;
+        const {store, state} = this.props;
         const {cities} = state;
 
         return (
             <div className="App">
-                <CityWeatherList cities={cities}/>
+                <CityWeatherList
+                    cities={cities}
+                    selectCity={(cityName) => store.dispatch({type: 'CITY_DETAIL', value: cityName})}/>
             </div>
         );
     }

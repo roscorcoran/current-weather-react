@@ -3,10 +3,13 @@ import CityWeatherItem from './CityWeatherItem';
 
 class CityWeatherList extends Component {
     render() {
-        const {cities} = this.props;
+        const {cities, selectCity} = this.props;
 
-        const listItems = cities.map((d) =>
-            <CityWeatherItem city={d} key={d}/>
+        const listItems = cities.map((cityName) =>
+            <CityWeatherItem
+                city={cityName}
+                key={cityName}
+                onClick={() => selectCity('Dublin')}/>
         );
 
         return (

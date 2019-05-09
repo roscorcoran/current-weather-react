@@ -25,7 +25,7 @@ function fetchDetailedWeatherForCity(city = '') {
 
 export function* fetchDetailedWeatherWorker(action) {
     try {
-        let city = action.value.name;
+        let city = action.value;
         let weather = yield call(fetchDetailedWeatherForCity, city);
 
         yield put({type: 'CITY_DETAIL_SUCCESS', payload: weather});
