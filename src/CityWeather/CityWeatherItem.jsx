@@ -1,4 +1,8 @@
 import React, {Component} from 'react';
+import ListItem from "@material-ui/core/ListItem";
+import ImageIcon from '@material-ui/icons/Image';
+import Avatar from "@material-ui/core/Avatar";
+import ListItemText from "@material-ui/core/ListItemText";
 
 class CityWeatherItem extends Component {
 
@@ -11,7 +15,7 @@ class CityWeatherItem extends Component {
         const WEATHER_GENERIC_ERROR_MESSAGE = 'There was an error loading weather please check your internet connection and try again';
         const WEATHER_API_ENDPOINT = 'http://api.openweathermap.org/data/2.5/';
         const {city} = this.props;
-        const weatherUrl = `${WEATHER_API_ENDPOINT}forecast?q=${city}&APPID=bd8326266ffeb1b662cf75fadf5dee2a`;
+        const weatherUrl = `${WEATHER_API_ENDPOINT}weather?q=${city}&APPID=bd8326266ffeb1b662cf75fadf5dee2a`;
         const state = this.state;
 
         fetch(weatherUrl)
@@ -41,11 +45,15 @@ class CityWeatherItem extends Component {
                 <li>Loading...</li>
             );
         } else {
+            const weatherDescription = `${cityWeatherSummary.weather[0].main} (${cityWeatherSummary.weather[0].description})`;
+
             return (
-                <li onClick={onClick}>
-                    {city} - (
-                    {cityWeatherSummary.city.country})
-                </li>
+                <ListItem onClick={onClick}>
+                    <Avatar>
+                        <ImageIcon/>
+                    </Avatar>
+                    <ListItemText primary={city} secondary={weatherDescription}/>
+                </ListItem>
             );
         }
     }

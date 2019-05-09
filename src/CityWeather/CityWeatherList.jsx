@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import CityWeatherItem from './CityWeatherItem';
+import List from "@material-ui/core/List";
 
 class CityWeatherList extends Component {
     render() {
@@ -13,9 +14,9 @@ class CityWeatherList extends Component {
         );
 
         return (
-            <ul>
+            <List>
                 {listItems}
-            </ul>
+            </List>
         );
     }
 }
