@@ -1,6 +1,4 @@
 #TODO
 
-* Look and feel - UI (Material?)
 * Unit Tests 
-* Error handling
-* Expand on Component Data Displayed
+* Expand on Component Data Displayed in Details
