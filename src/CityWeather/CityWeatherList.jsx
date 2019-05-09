@@ -9,7 +9,7 @@ class CityWeatherList extends Component {
             <CityWeatherItem
                 city={cityName}
                 key={cityName}
-                onClick={() => selectCity('Dublin')}/>
+                onClick={() => selectCity(cityName)}/>
         );
 
         return (

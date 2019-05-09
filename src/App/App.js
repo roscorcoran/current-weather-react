@@ -7,7 +7,7 @@ import CityWeatherDetail from "../CityWeather/CityWeatherDetail";
 class App extends Component {
     render() {
         const {store, state} = this.props;
-        const {cities} = state;
+        const {cities, errorMessage} = state;
 
         return (
             <div className="App">
@@ -17,6 +17,8 @@ class App extends Component {
                 <CityWeatherDetail cityWeatherDetail={state.cityWeatherDetail}
                     isLoading={state.isLoadingCityDetail}
                 />
+
+                <div className="ErrorMessage">{errorMessage}</div>
             </div>
         );
     }
