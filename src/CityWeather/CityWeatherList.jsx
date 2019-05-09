@@ -1,14 +1,12 @@
 import React, {Component} from 'react';
+import CityWeatherItem from './CityWeatherItem';
 
 class CityWeatherList extends Component {
     render() {
         const {cities} = this.props;
 
         const listItems = cities.map((d) =>
-            <li key={d}
-                 className='CityListItem'>
-                {d}
-            </li>
+            <CityWeatherItem city={d} key={d}/>
         );
 
         return (
