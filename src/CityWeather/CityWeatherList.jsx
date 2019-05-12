@@ -1,17 +1,18 @@
 import React, {Component} from 'react';
 import CityWeatherItem from './CityWeatherItem';
 import Grid from "@material-ui/core/Grid";
+import {map} from 'loadsh';
 
 class CityWeatherList extends Component {
     render() {
-        const {cities, selectCity} = this.props;
+        const {cities, store} = this.props;
 
-        const listItems = cities.map((cityName) =>
-            <Grid item xs={12} md={6} lg={4} key={cityName}>
+        const listItems = map(cities, (city, cityId) =>
+            <Grid item xs={12} md={6} lg={4} key={cityId}>
                 <CityWeatherItem
-                    city={cityName}
-                    key={cityName}
-                    onClick={() => {/* return selectCity(cityName)*/}}/>
+                    store={store}
+                    city={city}
+                    key={cityId}/>
             </Grid>
         );
 

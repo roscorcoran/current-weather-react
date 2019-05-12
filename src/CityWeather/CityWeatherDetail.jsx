@@ -24,43 +24,18 @@ const styles = theme => ({
 
 class CityWeatherDetail extends Component {
 
-    state = {
-        cityWeatherDetail: null,
-        isLoading: true
-    };
-
     componentDidMount() {
-        const {city} = this.props;
-        const WEATHER_API_ENDPOINT = 'http://api.openweathermap.org/data/2.5/';
-        const WEATHER_GENERIC_ERROR_MESSAGE = 'There was an error loading weather please check your internet connection and try again';
-        const weatherUrl = `${WEATHER_API_ENDPOINT}forecast?q=${city}&APPID=bd8326266ffeb1b662cf75fadf5dee2a`;
-        const state = this.state;
-
-        fetch(weatherUrl)
-            .then((res) => {
-                if (res.status !== 200) {
-                    throw new Error(WEATHER_GENERIC_ERROR_MESSAGE);
-                } else {
-                    res.json().then((res) => {
-                        this.setState(() => {
-                            return {...state, cityWeatherDetail: res, isLoading: false}
-                        });
-                    });
-                }
-            })
-            .catch((error) => {
-                throw new Error(WEATHER_GENERIC_ERROR_MESSAGE);
-            });
+        let {cityId, store} = this.props;
+        store.dispatch({type: 'CITY_DETAIL', value: cityId});
     }
 
     render() {
-        const {cityWeatherDetail, isLoading} = this.state;
-        const {classes} = this.props;
+        const {detail: {forecast, isLoading}, classes} = this.props;
 
-        if (isLoading || !cityWeatherDetail) {
+        if (isLoading || !forecast) {
             return <CircularProgress className={classes.progress}/>;
         } else {
-            const rows = cityWeatherDetail.list;
+            const rows = forecast.list;
 
             return (
                 <Paper className={classes.root}>

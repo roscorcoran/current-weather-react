@@ -49,8 +49,6 @@ const styles = theme => ({
 class CityWeatherItem extends Component {
 
     state = {
-        isLoading: true,
-        cityWeatherSummary: null,
         expanded: false,
     };
 
@@ -59,33 +57,15 @@ class CityWeatherItem extends Component {
     };
 
     componentDidMount() {
-        const WEATHER_GENERIC_ERROR_MESSAGE = 'There was an error loading weather please check your internet connection and try again';
-        const WEATHER_API_ENDPOINT = 'http://api.openweathermap.org/data/2.5/';
-        const {city} = this.props;
-        const weatherUrl = `${WEATHER_API_ENDPOINT}weather?q=${city}&APPID=bd8326266ffeb1b662cf75fadf5dee2a`;
-        const state = this.state;
-
-        fetch(weatherUrl)
-            .then((res) => {
-                if (res.status !== 200) {
-                    throw new Error(WEATHER_GENERIC_ERROR_MESSAGE);
-                } else {
-                    res.json().then((res) => {
-                        this.setState(() => {
-                            return {...state, cityWeatherSummary: res, isLoading: false}
-                        });
-                    });
-                }
-            })
-            .catch((error) => {
-                throw new Error(WEATHER_GENERIC_ERROR_MESSAGE);
-            });
-
+        const {city, store} = this.props;
+        store.dispatch({type: 'CITY_SUMMARY', value: city.id});
     }
 
     render() {
-        const {classes, city, onClick} = this.props;
-        const {cityWeatherSummary, isLoading} = this.state;
+        const {store, classes, city} = this.props;
+        const {detail, cityWeatherSummary, isLoading} = city;
+        const {expanded} = this.state;
+
 
         if (isLoading) {
             return <CircularProgress className={classes.progress}/>;
@@ -98,21 +78,17 @@ class CityWeatherItem extends Component {
             const weatherIconLink = `http://openweathermap.org/img/w/${weathers[0].icon}.png`;
 
             return (
-
-
-                <Card onClick={onClick} className={classes.card}>
+                <Card className={classes.card}>
                     <CardHeader
                         avatar={
-                            <Avatar aria-label="Weather..." src={weatherIconLink} className={classes.avatar}>
-                                {city[0]}
-                            </Avatar>
+                            <Avatar aria-label="Weather..." src={weatherIconLink} className={classes.avatar}>A</Avatar>
                         }
                         action={
                             <IconButton>
                                 <MoreVertIcon/>
                             </IconButton>
                         }
-                        title={city}
+                        title={capitalise(city.id)}
                         subheader="September 14, 2016"
                     />
                     <CardContent>
@@ -127,32 +103,28 @@ class CityWeatherItem extends Component {
                         </IconButton>
                         <IconButton
                             className={classNames(classes.expand, {
-                                [classes.expandOpen]: this.state.expanded,
+                                [classes.expandOpen]: expanded,
                             })}
                             onClick={this.handleExpandClick}
-                            aria-expanded={this.state.expanded}
+                            aria-expanded={expanded}
                             aria-label="Show more"
                         >
                             <ExpandMoreIcon/>
                         </IconButton>
                     </CardActions>
-                    <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
+                    <Collapse in={expanded} timeout="auto" unmountOnExit>
                         <CardContent>
-
-
-                            <CityWeatherDetail city={city}/>
-
-
-                            {/*<Typography paragraph>Method:</Typography>*/}
-                            {/*<Typography>*/}
-                            {/*    Set aside off of the heat to let rest for 10 minutes, and then serve.*/}
-                            {/*</Typography>*/}
+                            <CityWeatherDetail detail={detail} cityId={city.id} store={store}/>
                         </CardContent>
                     </Collapse>
                 </Card>
             );
         }
     }
+}
+
+function capitalise(s) {
+    return s.charAt(0).toUpperCase() + s.slice(1);
 }
 
 export default withStyles(styles)(CityWeatherItem);

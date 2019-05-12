@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import './App.css';
 
 import CityWeatherList from '../CityWeather/CityWeatherList'
-import CityWeatherDetail from "../CityWeather/CityWeatherDetail";
 import MenuBar from "../Nav/MenuBar";
 
 import Grid from "@material-ui/core/Grid";
@@ -26,8 +25,7 @@ class App extends Component {
                 </Grid>
 
                 <Grid item xs={12}>
-                    <CityWeatherList cities={cities}
-                                     selectCity={(cityName) => store.dispatch({type: 'CITY_DETAIL', value: cityName})}/>
+                    <CityWeatherList store={store} cities={cities}/>
                 </Grid>
 
             </Grid>
