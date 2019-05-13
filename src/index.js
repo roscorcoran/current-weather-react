@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {createStore, applyMiddleware} from 'redux';
+import {createStore, applyMiddleware, compose} from 'redux';
 import createSagaMiddleware from 'redux-saga';
 
 import './index.css';
@@ -12,7 +12,11 @@ import App from './App/App';
 const sagaMiddleware = createSagaMiddleware();
 const store = createStore(
     reducer,
-    applyMiddleware(sagaMiddleware)
+    compose(
+        applyMiddleware(sagaMiddleware),
+        // Required for the redux devtools extension
+        window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+    )
 );
 
 sagaMiddleware.run(rootSaga);
